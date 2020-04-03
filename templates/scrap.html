@@ -1,0 +1,89 @@
+	<input type="text" id="name" name="Address" minlength="4" size="50">
+
+@app.route('/')
+def home():
+  return '''
+   <form method="POST" action="/get_id">
+    <textarea name="textbox"></textarea>
+    <button type="submit" name="submit">Submit</button>
+  </form> 
+   '''
+@app.route('/get_id', methods=['POST'])
+def get_id():
+  id = flask.request.form['textbox']
+  #do something
+
+k, i = get_coords('2520 55 St, Boulder, CO', config.google_maps_key)
+
+
+ <table style="width:100%">
+  <tr>
+    <th>Trail Name</th>
+    <th>Rating</th>
+    <th>Difficulty</th>
+  </tr>
+  <tr>
+  {% for trail in trails %}
+    <tr>	
+    	<td>trail.name</td>
+    	<td>trail.rating</td>
+    	<td>trail.difficulty</td>
+	</tr>  
+  {% endfor %}
+</table> 
+
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Trail Name</th>
+      <th scope="col">Trail Rating</th>
+      <th scope="col">Trail Difficulty</th>
+      <th scope="col">Trail Conditions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for trail in trails %}
+      <tr>
+        <th scope="row"></th>
+        <td>{{ trail.name }}</td>
+        <td>{{ trail.rating }}</td>
+        <td>{{ trail.difficulty }}</td>
+        <td>{{ trail.conditions }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

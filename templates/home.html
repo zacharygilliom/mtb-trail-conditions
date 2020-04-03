@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title class="text-light bg-dark">Home</title>
+{% endblock %}
+
+{% block body%}
+	<h1 class="text-light bg-dark" style="text-align: center">Welcome Rider!</h1>
+	<h2 class="text-light bg-dark" style="text-align: center">How many times have you traveled far away to get to a trail, only to find out it was a downpour the previous day and the trail is unrideable?</h2>
+	<h2 class="text-light bg-dark" style="text-align: center">That is where we come in.  Using weather data and data from users like you, we are attempting to try to give you the best estimate of what your riding conditions will be like today.</h2>
+	<h2 class="text-light bg-dark" style="text-align: center">Start off by entering the location you are traveling to and we will fetch all the trails with 30 miles of you.
+		<br>
+			<form method="POST" action="/get_address">
+				<input type="text" id="Address" name="Address" minlength="4" size="50" placeholder="Enter the address here...">
+    			<button type="submit" name="submit">Submit</button>
+  			</form> 
+	</h2>
+{% endblock %}

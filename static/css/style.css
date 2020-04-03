@@ -1,0 +1,12 @@
+table.table-bordered.table-dark{
+    border-color: #fff;
+  }
+table.table-bordered.table-dark > thead > tr > th{
+	border-color: #fff;
+}
+table.table-bordered.table-dark > tbody > tr > td{
+    border-color: #fff;
+}
+table.table-bordered.table-dark > tbody > tr > th{
+    border-color: #fff;
+}

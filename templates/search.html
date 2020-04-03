@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Trails</title>
+{% endblock %}
+
+{% block body %}
+	<div>		
+		<h1 class="text-light bg-dark" style="text-align: center">Here is a list of trails within a 50 mile radius</h1>
+		<table class="table table-bordered table-dark">
+		  <thead>
+		    <tr>
+		      <th scope="col">Trail Name</th>
+		      <th scope="col">Trail Rating</th>
+		      <th scope="col">Trail Difficulty</th>
+		      <th scope="col">Trail Conditions</th>
+		      <th scope="col">Distance to Trail (in miles)</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    {% for trail in trails %}
+		    <tr>
+		        <th scope="row">{{ trail.name }}</th>
+		        <td>{{ trail.rating }}</td>
+		        <td>{{ trail.difficulty }}</td>
+		        <td>
+		        	{% for condition in trail.conditions %}
+		        		<p> {{ condition }} </p>
+		        	{% endfor %}
+		        </td>
+		        <td>{{ trail.get_distance_to_origin(user_loc) }} </td>
+		    </tr>
+		    {% endfor %}
+		  </tbody>
+		</table>
+	</div>
+{% endblock %}
