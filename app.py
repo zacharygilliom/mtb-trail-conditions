@@ -9,14 +9,14 @@ from flask import Flask, render_template, request
 weather_key = config.weather_api_key
 maps_KEY = config.google_maps_key
 
-# --- Want to remove this class ---
-# a class to store the variables for the users location.
-# class Location:
-# 	def __init__(self, user_lat, user_lon):
-# 		self.user_lat = user_lat
-# 		self.user_lon = user_lon
 
 app = Flask(__name__)
+
+class UserLocation(object):
+
+	def __init__ (self, user_lat, user_lon):
+		self.lat = user_lat
+		self.lon = user_lon
 
 
 class Trail:
@@ -61,28 +61,30 @@ class Trail:
 	# to calculate the distance between the trail location and the location that the user entered.
 	# TODO need to fix how I get the users input location.
 
-	#def get_distance_to_origin(selected_lat, selected_lon, lat2, lon2):
-	#    # The math module contains a function named 
-	#    # radians which converts from degrees to radians.
-	#
-	#    lon2 = self.lon
-	#    lat2 = self.lat
-	#    selected_lon = radians(selected_lon)
-	#    lon2 = radians(lon2)
-	#    selected_lat = radians(selected_lat)
-	#    lat2 = radians(lat2) 
-	#
-	#    # Haversine formula
-	#    dlon = lon2 - selected_lon
-	#    dlat = lat2 - selected_lat
-	#    a = sin(dlat / 2)**2 + cos(selected_lat) * cos(lat2) * sin(dlon / 2)**2
-	#    c = 2 * asin(sqrt(a))
-	#    # Radius of earth in kilometers. Use 3956 for miles
-	#    r = 6371
-	#    kilometers = c * r
-	#    miles = kilometers * 0.62137
-	#    # calculate the result
-	#    return miles 
+	def get_distance_to_origin(self, UserLocation):
+	   # The math module contains a function named 
+	   # radians which converts from degrees to radians.
+		selected_lat = self.lat
+		selected_lon = self.lon
+		lon2 = UserLocation.lon
+		lat2 = UserLocation.lat
+		selected_lon = radians(selected_lon)
+		lon2 = radians(lon2)
+		selected_lat = radians(selected_lat)
+		lat2 = radians(lat2) 
+	
+		# Haversine formula
+		dlon = lon2 - selected_lon
+		dlat = lat2 - selected_lat
+		a = sin(dlat / 2)**2 + cos(selected_lat) * cos(lat2) * sin(dlon / 2)**2
+		c = 2 * asin(sqrt(a))
+		# Radius of earth in kilometers. Use 3956 for miles
+		r = 6371
+		kilometers = c * r
+		miles = round((kilometers * 0.62137),2)
+
+		# calculate the result
+		return miles 
 
 
 class YesterdayWeather:
@@ -163,8 +165,10 @@ def get_coords(address, key):
 	geocode_result = gmaps.geocode(address)
 	lat = geocode_result[0]['geometry']['location']['lat']
 	lon = geocode_result[0]['geometry']['location']['lng']
+	user_loc = UserLocation(lat, lon)
 	
-	return lat, lon
+	return user_loc	
+	# return lat, lon
 
 def get_weather(weath):
 	# This function takes a dictionary of our weather data from the get_location_function.
@@ -268,17 +272,16 @@ def enter_address():
 @app.route('/get_address', methods=['POST'])
 def trail_search():
 	user_address= request.form['Address']
-	k, i = get_coords(user_address, config.google_maps_key)
-	trail_list = get_trails(lat=k, lon=i, maxDistance=50, key=config.mtb_api_key)
+	user_loc = get_coords(user_address, config.google_maps_key)
+	trail_list = get_trails(lat=user_loc.lat, lon=user_loc.lon, maxDistance=50, key=config.mtb_api_key)
 	for trail in trail_list:
 		trail_weather_json = get_location_data(lat=trail.lat, lon=trail.lon)
 		trail_weather = get_weather(trail_weather_json)
 		trail.conditions = compare_weather_to_trail_condition(trail, trail_weather)
-	return render_template('search.html', trails=trail_list)
+	return render_template('search.html', trails=trail_list, user_loc=user_loc)
 
 if __name__ == '__main__':
-	
-	app.serve(debug=True)
+	app.run()
 	# testing trails out in Boulder CO as these are the most active trails with the most information given.
 	# this will get the trail data
 	# k, i = get_coords('2520 55th St, Boulder, CO', config.google_maps_key)
