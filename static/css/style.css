@@ -10,3 +10,51 @@ table.table-bordered.table-dark > tbody > tr > td{
 table.table-bordered.table-dark > tbody > tr > th{
     border-color: #fff;
 }
+/* .page-home {
+    font-family: "Noto Sans", Times, serif;
+    font-weight: 300;
+    color:#fff;
+} */
+.navbar.navbar-expand-lg.navbar-light {
+    background:transparent;
+    top:0;
+}
+.navbar.navbar-expand-lg.navbar-light > a {
+    font-size: 4rem;
+    color:#fff;
+}
+.navbar.navbar-expand-lg.navbar-light > div > ul > li > a {
+    font-size: 2rem;
+    padding-top: 1.5rem;
+    padding-right: 2.0rem;
+    color: #fff;
+}
+.landing-page-conditions {
+    text-align: center;
+    font-size: 3rem;
+    padding-left: 30px;
+    color: #fff;
+}
+.landing-page-info {
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+    /* background-color: rgb(245, 245, 245); */
+    line-height: 20pt;
+    color: #fff;
+}
+.landing-page-involved {
+    text-align: center;
+    font-size: 3rem;
+    color: #fff;
+}
+.landing-page-involved-info {
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+    /* background-color: rgb(245, 245, 245); */
+    line-height: 20pt;
+    color: #fff;
+}
+.imgbox {
+    display: grid;
+    height:100%;
+}

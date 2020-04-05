@@ -266,10 +266,18 @@ def compare_weather_to_trail_condition(trail, weath):
 	return trail_current_conditions
 
 @app.route('/')
-def enter_address():
+def home():
 	return render_template('home.html')
 
-@app.route('/get_address', methods=['POST'])
+@app.route('/bike')
+def get_bike():
+	return render_template('bike.html')
+
+@app.route('/hike')
+def get_hike():
+	return render_template('hike.html')
+
+@app.route('/trails', methods=['POST'])
 def trail_search():
 	user_address= request.form['Address']
 	user_loc = get_coords(user_address, config.google_maps_key)
@@ -278,10 +286,10 @@ def trail_search():
 		trail_weather_json = get_location_data(lat=trail.lat, lon=trail.lon)
 		trail_weather = get_weather(trail_weather_json)
 		trail.conditions = compare_weather_to_trail_condition(trail, trail_weather)
-	return render_template('search.html', trails=trail_list, user_loc=user_loc)
+	return render_template('trails.html', trails=trail_list, user_loc=user_loc)
 
 if __name__ == '__main__':
-	app.run()
+	app.run(debug=True)
 	# testing trails out in Boulder CO as these are the most active trails with the most information given.
 	# this will get the trail data
 	# k, i = get_coords('2520 55th St, Boulder, CO', config.google_maps_key)

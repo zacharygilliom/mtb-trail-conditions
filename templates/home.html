@@ -1,18 +1,58 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title class="text-light bg-dark">Home</title>
+<title>Home</title>
 {% endblock %}
 
 {% block body%}
-	<h1 class="text-light bg-dark" style="text-align: center">Welcome Rider!</h1>
-	<h2 class="text-light bg-dark" style="text-align: center">How many times have you traveled far away to get to a trail, only to find out it was a downpour the previous day and the trail is unrideable?</h2>
-	<h2 class="text-light bg-dark" style="text-align: center">That is where we come in.  Using weather data and data from users like you, we are attempting to try to give you the best estimate of what your riding conditions will be like today.</h2>
-	<h2 class="text-light bg-dark" style="text-align: center">Start off by entering the location you are traveling to and we will fetch all the trails with 30 miles of you.
-		<br>
-			<form method="POST" action="/get_address">
-				<input type="text" id="Address" name="Address" minlength="4" size="50" placeholder="Enter the address here...">
-    			<button type="submit" name="submit">Submit</button>
-  			</form> 
-	</h2>
+<body>
+	<div class="imgbox" style="background-image:url('/static/images/brown-wooden-bridge-near-forest.jpg')">
+		<div>
+		<nav class="navbar navbar-expand-lg navbar-light">
+			<a class="navbar-brand" href="/">Home</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			  <span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+			  <ul class="navbar-nav">
+				<li class="nav-item">
+				  <a class="nav-link" href="/bike">Biking</a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link" href="/hike">Hiking</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/help">Help</a>
+				</li>
+			  </ul>
+			</div>
+		</nav>
+	</div>
+	<div>
+		<h1 class="landing-page-conditions">
+			Welcome to the Trail Condition Finder
+		</h1>
+	</div>
+	<div class="container-lg">
+		<h5 class="landing-page-info">
+			We provide a tool that aggregates data from MTBProject, Darksky, and Google maps to provide you with an all inclusive trail 
+			guide.  We use the data provided by people like you who review the trails.  With this data and the weather data 
+			from Darksky we aim to provide you with the most up to date trail conditions.  We search for all the trails within a given 
+			distance to provide you with the most comprehensive list.  We provide two trail types: Mountain Biking and Hiking.  
+			To get started, simply select which trail type you would like to search for at the top of the page and you will be
+			redirected to enter the address of which you would like to search.  
+		</h5>
+	</div>
+	<div class="container-lg">
+		<h1 class="landing-page-involved">
+			How to Help
+		</h1>
+		<h5 class="landing-page-involved-info">
+			Want to know how you could help out and get involved?  The best way is to head over to MTBProject.com and leave reviews
+			on your favorite trails that you ride everyday.  The best way to help with these reviews is to do your best to review 
+			the conditions as you are riding.  This is part of the data that we use in our algorithms to estimate the current conditions.
+		</h5>
+	</div>
+	</div>
+</body>
 {% endblock %}
