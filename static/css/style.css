@@ -34,6 +34,7 @@ table.table-bordered.table-dark > tbody > tr > th{
     font-size: 3rem;
     padding-left: 30px;
     color: #fff;
+    padding-top: 30px;
 }
 .landing-page-info {
     padding-right: 1.5rem;
@@ -41,11 +42,13 @@ table.table-bordered.table-dark > tbody > tr > th{
     /* background-color: rgb(245, 245, 245); */
     line-height: 20pt;
     color: #fff;
+    padding-top: 15px;
 }
 .landing-page-involved {
     text-align: center;
     font-size: 3rem;
     color: #fff;
+    padding-top: 40px;
 }
 .landing-page-involved-info {
     padding-right: 1.5rem;
@@ -53,8 +56,28 @@ table.table-bordered.table-dark > tbody > tr > th{
     /* background-color: rgb(245, 245, 245); */
     line-height: 20pt;
     color: #fff;
+    padding-top: 15px;
 }
 .imgbox {
-    display: grid;
+    /* display: grid; */
+    background-size: cover;
     height:100%;
+    width:100%;
+    background-repeat: no-repeat;
+}
+.navbar.navbar-expand-lg.navbar-light > a:hover {
+    color: white;
+    /* background-color: white; */
+}
+.navbar.navbar-expand-lg.navbar-light > div > ul > li > a:hover {
+    color: white;
+    /* background-color: white; */
+}
+#footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    height: 2.5rem;
+    color: white;
+    text-align: center;
 }
