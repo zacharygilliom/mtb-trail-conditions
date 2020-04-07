@@ -3,7 +3,7 @@ import googlemaps
 import requests
 import json
 import time
-from math import *
+from math import ceil, radians, sin, cos, asin, sqrt
 from flask import Flask, render_template, request
 
 weather_key = config.weather_api_key
@@ -265,13 +265,37 @@ def compare_weather_to_trail_condition(trail, weath):
 
 	return trail_current_conditions
 
+def create_address(road_num, town, state, zipcode):
+	address_list = [road_num, town, state, zipcode]
+	# road_number = address_list
+	# town_state_zipcode = address[2:4].join('')
+	# two_part_address_list = [road_number, town_state_zipcode]
+	addr = ",".join(address_list)
+	return addr
+
+def get_states():
+	states = [
+		'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
+		'Colorado', 'Connecticut', 'Delaware', 'District of Columbia', 'Florida', 'Georgia',
+		'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 
+		'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 
+		'Mississippi', 'Missouri', 'Montana', 'Nebraska', 
+		'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 
+		'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 
+		'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina', 'South Dakota', 
+		'Tennessee', 'Texas', 'U.S. Virgin Islands', 'Utah', 'Vermont', 'Virginia', 
+		'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+	]
+	return states
+
 @app.route('/')
 def home():
 	return render_template('home.html')
 
 @app.route('/bike')
 def get_bike():
-	return render_template('bike.html')
+	states = get_states()
+	return render_template('bike.html', states=states)
 
 @app.route('/hike')
 def get_hike():
@@ -279,17 +303,18 @@ def get_hike():
 
 @app.route('/trails', methods=['POST'])
 def trail_search():
-	user_address= request.form['Address']
+	# user_address = request.form['Address']
+	user_address = create_address(request.form['inputRoadNum'], town=request.form['inputCity'], state=request.form['inputState'],
+					zipcode=request.form['inputZip'])
+	user_distance = request.form['Distance']
 	user_loc = get_coords(user_address, config.google_maps_key)
-	trail_list = get_trails(lat=user_loc.lat, lon=user_loc.lon, maxDistance=50, key=config.mtb_api_key)
+	trail_list = get_trails(lat=user_loc.lat, lon=user_loc.lon, maxDistance=user_distance, key=config.mtb_api_key)
 	for trail in trail_list:
 		trail_weather_json = get_location_data(lat=trail.lat, lon=trail.lon)
 		trail_weather = get_weather(trail_weather_json)
 		trail.conditions = compare_weather_to_trail_condition(trail, trail_weather)
-	return render_template('trails.html', trails=trail_list, user_loc=user_loc)
+	return render_template('trails.html', trails=trail_list, user_loc=user_loc, user_distance=user_distance)
 
 if __name__ == '__main__':
 	app.run(debug=True)
-	# testing trails out in Boulder CO as these are the most active trails with the most information given.
-	# this will get the trail data
-	# k, i = get_coords('2520 55th St, Boulder, CO', config.google_maps_key)
+

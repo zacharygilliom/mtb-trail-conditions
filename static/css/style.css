@@ -1,20 +1,27 @@
-table.table-bordered.table-dark{
-    border-color: #fff;
+table.table-sm {
+    border-color: black;
+    background-color: white;
   }
-table.table-bordered.table-dark > thead > tr > th{
-	border-color: #fff;
+table.table-sm > thead > tr > th{
+	border-color: black;
 }
-table.table-bordered.table-dark > tbody > tr > td{
-    border-color: #fff;
+table.table-sm > tbody > tr > td{
+    border-color:black;
 }
-table.table-bordered.table-dark > tbody > tr > th{
-    border-color: #fff;
+table.table-sm > tbody > tr > th{
+    border-color: black;
 }
-/* .page-home {
-    font-family: "Noto Sans", Times, serif;
-    font-weight: 300;
-    color:#fff;
-} */
+.container-lg-table {
+    padding-left: 250px;
+    padding-right: 250px;
+    /* text-align: center; */
+}
+.container-lg-table > .page-title-info {
+    align-items: center;
+    text-align: center;
+    color: white
+}
+
 .navbar.navbar-expand-lg.navbar-light {
     background:transparent;
     top:0;
@@ -39,7 +46,6 @@ table.table-bordered.table-dark > tbody > tr > th{
 .landing-page-info {
     padding-right: 1.5rem;
     padding-left: 1.5rem;
-    /* background-color: rgb(245, 245, 245); */
     line-height: 20pt;
     color: #fff;
     padding-top: 15px;
@@ -53,25 +59,21 @@ table.table-bordered.table-dark > tbody > tr > th{
 .landing-page-involved-info {
     padding-right: 1.5rem;
     padding-left: 1.5rem;
-    /* background-color: rgb(245, 245, 245); */
     line-height: 20pt;
     color: #fff;
     padding-top: 15px;
 }
 .imgbox {
-    /* display: grid; */
     background-size: cover;
     height:100%;
     width:100%;
     background-repeat: no-repeat;
 }
 .navbar.navbar-expand-lg.navbar-light > a:hover {
-    color: white;
-    /* background-color: white; */
+    color:white;
 }
 .navbar.navbar-expand-lg.navbar-light > div > ul > li > a:hover {
-    color: white;
-    /* background-color: white; */
+    color:white;
 }
 #footer {
     position: absolute;
@@ -81,3 +83,28 @@ table.table-bordered.table-dark > tbody > tr > th{
     color: white;
     text-align: center;
 }
+.container-lg.bike-section {
+    width:50%;
+}
+
+.message {
+    text-align: center;
+    color:white;
+}
+
+.navbar-light .navbar-toggler {
+    color: white;
+    border-color: white;
+}
+.navbar-light .navbar-toggler-icon {
+    color: white;
+}
+
+.navbar-light.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  }
+  
+ .navbar-toggler {
+     background-color: white;
+    border-color: rgb(255,255,255);
+  }
