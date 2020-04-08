@@ -2,24 +2,41 @@ table.table-sm {
     border-color: black;
     background-color: white;
   }
+/* table.table-sm > tbody {
+    overflow-y: scroll;
+    height: 200px;
+    position: absolute;
+  } */
+table.table-sm > tbody > tr {
+    width: 100%;
+    /* display: inline-table;
+    table-layout: fixed; */
+}
+.page-title-info {
+    color: white;
+    text-align: center;
+}
 table.table-sm > thead > tr > th{
-	border-color: black;
+    border-color: black;
+    font-size: small;
 }
 table.table-sm > tbody > tr > td{
     border-color:black;
+    font-size: small;
 }
 table.table-sm > tbody > tr > th{
     border-color: black;
+    font-size: small;
 }
 .container-lg-table {
     padding-left: 250px;
     padding-right: 250px;
     /* text-align: center; */
-}
-.container-lg-table > .page-title-info {
-    align-items: center;
-    text-align: center;
-    color: white
+    /* position: relative;
+    overflow: auto;
+    height: 300px;
+    display: block; */
+    padding-bottom: 50px;
 }
 
 .navbar.navbar-expand-lg.navbar-light {
@@ -108,3 +125,20 @@ table.table-sm > tbody > tr > th{
      background-color: white;
     border-color: rgb(255,255,255);
   }
+
+#wrap {
+      position: relative; 
+      /* width: 500px; 
+      min-height: 100%;  */
+      /* background: #eee; */
+}
+
+#footer-content {
+    position: absolute;
+    bottom: 0px;
+    height: 25px;
+    /* background: #333; */
+    /* width: 100%; */
+    color:white;
+    align-content: center;
+}

@@ -36,6 +36,8 @@ class Trail:
 		self.lon = lon
 		self.difficulty = difficulty
 
+		print(self.conditionDetails)
+
 	def get_condition_keywords(self):
 		# Looking for keywords that might impact trail conditions.
 		# i.e. if it is muddy - then most likely it will still be muddy no matter the weather.
@@ -47,7 +49,7 @@ class Trail:
 		else:
 			for word in keywords:
 				start = self.conditionDetails.find(word)
-				if start > 0:
+				if start >= 0:
 					trail_keywords.append(word)
 			if trail_keywords:
 				pass
@@ -116,7 +118,7 @@ class YesterdayWeather:
 def get_trails(lat, lon, maxDistance, key):
 	# Get all the trails within a given distance from the user.
 	# this will return a list of Instantiated Trail Objects.
-	request = requests.get(f'http://www.mtbproject.com/data/get-trails?lat={lat}&lon={lon}&maxDistance={maxDistance}&key={key}')
+	request = requests.get(f'http://www.mtbproject.com/data/get-trails?lat={lat}&lon={lon}&maxDistance={maxDistance}&key={key}&maxResults=20')
 
 	# Parse our JSON output
 	trails_text = request.text
@@ -130,7 +132,10 @@ def get_trails(lat, lon, maxDistance, key):
 		id = t['id']
 		conditionStatus = t['conditionStatus']
 		conditionDate = t['conditionDate']
-		conditionDetails = t['conditionDetails']
+		try:
+			conditionDetails = t['conditionDetails'].lower()
+		except:
+			conditionDetails = t['conditionDetails']			
 		rating = t['stars']
 		lat = t['latitude']
 		lon = t['longitude']
@@ -138,6 +143,8 @@ def get_trails(lat, lon, maxDistance, key):
 		trail = Trail(id=id, name=name, conditionStatus=conditionStatus, conditionDetails=conditionDetails, conditionDate=conditionDate,
 					rating=rating, lat=lat, lon=lon, difficulty=difficulty)
 		trails.append(trail)
+		# print(lat, lon)
+		# print('break')
 
 	return trails
 
@@ -153,6 +160,7 @@ def get_location_data(lat, lon):
 	t = t - 86400
 	request = requests.get(f'https://api.darksky.net/forecast/{weather_key}/{lat},{lon},{t}')
 	weather_dicts = json.loads(request.text)
+	# print(weather_dicts)
 	
 	return weather_dicts
 
@@ -183,10 +191,8 @@ def get_weather(weath):
 		precip_type = weath['currently']['precipType']
 	except:
 		precip_type = 'None'
-
 	yest_weather = YesterdayWeather(precip_prob=precip_prob, temperature=temperature, precip_type=precip_type, wind_speed=wind_speed,
 					humidity=humidity, summary=summ)
-
 	return yest_weather
 
 def compare_weather_to_trail_condition(trail, weath):
@@ -263,13 +269,15 @@ def compare_weather_to_trail_condition(trail, weath):
 		if key == 'None' and weather == 'Dry':
 			trail_current_conditions.append('Dry')
 
+	if trail_current_conditions:
+		pass
+	else:
+		trail_current_conditions.append('None')
+
 	return trail_current_conditions
 
 def create_address(road_num, town, state, zipcode):
 	address_list = [road_num, town, state, zipcode]
-	# road_number = address_list
-	# town_state_zipcode = address[2:4].join('')
-	# two_part_address_list = [road_number, town_state_zipcode]
 	addr = ",".join(address_list)
 	return addr
 
@@ -303,7 +311,6 @@ def get_hike():
 
 @app.route('/trails', methods=['POST'])
 def trail_search():
-	# user_address = request.form['Address']
 	user_address = create_address(request.form['inputRoadNum'], town=request.form['inputCity'], state=request.form['inputState'],
 					zipcode=request.form['inputZip'])
 	user_distance = request.form['Distance']
