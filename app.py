@@ -339,6 +339,10 @@ def trail_search():
 		trail.conditions = compare_weather_to_trail_condition(trail, trail_weather)
 	return render_template('trails.html', trails=trail_list, user_loc=user_loc, user_distance=user_distance)
 
+@app.route('/help')
+def get_help():
+	return render_template('help.html')
+
 if __name__ == '__main__':
 	app.run(debug=True)
 
