@@ -118,11 +118,26 @@ class YesterdayWeather:
 def get_trails(lat, lon, maxDistance, key):
 	# Get all the trails within a given distance from the user.
 	# this will return a list of Instantiated Trail Objects.
-	request = requests.get(f'http://www.mtbproject.com/data/get-trails?lat={lat}&lon={lon}&maxDistance={maxDistance}&key={key}&maxResults=20')
 
 	# Parse our JSON output
-	trails_text = request.text
-	trails_dict = json.loads(trails_text)
+	
+	#Uncomment this for live API version.  This is commented out so that we can save our API requests
+	
+	# request = requests.get(f'http://www.mtbproject.com/data/get-trails?lat={lat}&lon={lon}&maxDistance={maxDistance}&key={key}&maxResults=20')	
+	# trails_text = request.text
+	# trails_dict = json.loads(trails_text)
+
+	# Writing our api call data to a json file for continued use instead of making api requests.  Commented out because we don't want to updated
+	# our file and because our api isn't making requsts right now.
+	
+	# with open('trailsApiData.json', 'w') as json_file:
+	# 	json.dump(trails_dict, json_file)
+	
+	# Loading in our Trail Data test so we can play around with html without making api requests.
+	
+	with open('trailsApiData.json') as f:
+		trails_dict = json.load(f)
+
 	trails = []
 
 	# grab out keys in the JSON output for each variable and store the key-values into our trails class.
@@ -143,9 +158,7 @@ def get_trails(lat, lon, maxDistance, key):
 		trail = Trail(id=id, name=name, conditionStatus=conditionStatus, conditionDetails=conditionDetails, conditionDate=conditionDate,
 					rating=rating, lat=lat, lon=lon, difficulty=difficulty)
 		trails.append(trail)
-		# print(lat, lon)
-		# print('break')
-
+	
 	return trails
 
 
@@ -158,9 +171,14 @@ def get_location_data(lat, lon):
 	# as, we don't need a fraction of a second accuracy for this.
 	t = ceil(time.time())
 	t = t - 86400
-	request = requests.get(f'https://api.darksky.net/forecast/{weather_key}/{lat},{lon},{t}')
-	weather_dicts = json.loads(request.text)
-	# print(weather_dicts)
+	''' Uncooment two lines below when fix is ready.  This saves the number of api requests made when styling our html documents.
+	'''
+	# request = requests.get(f'https://api.darksky.net/forecast/{weather_key}/{lat},{lon},{t}')
+	# weather_dicts = json.loads(request.text)
+	
+	# open our pre-made weather data so we can work on styling our html.
+	with open('weatherApiData.json') as f:
+		weather_dicts = json.load(f)
 	
 	return weather_dicts
 
