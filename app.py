@@ -36,7 +36,6 @@ class Trail:
 		self.lon = lon
 		self.difficulty = difficulty
 
-		print(self.conditionDetails)
 
 	def get_condition_keywords(self):
 		# Looking for keywords that might impact trail conditions.
