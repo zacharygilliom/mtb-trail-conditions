@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Trails</title>
+<title>Bike Trails</title>
 {% endblock %}
 
 {% block body %}
 <!-- <body class= "imgbox" style="background-image: url('/static/images/brown-wooden-bridge-near-forest-967420.jpg')"> -->
-	<body style="background-color: slategray;">
+	<body style="background-color: slategray; ">
 	<div id="wrap">
 	<div>
 		<nav class="navbar navbar-expand-lg navbar-light">
@@ -29,7 +29,7 @@
 			</div>
 		</nav>
 	</div>
-	<h1 class="page-title-info">Here is a list of trails within a {{ user_distance }} mile radius</h1>
+	<h1 class="page-title-info">Here is a list of biking trails within a {{ user_distance }} mile radius</h1>
 	<div class=container-lg-table>		
 		<table class="table table-bordered table-sm">
 		  <thead class=thead-dark>
@@ -62,13 +62,10 @@
 		  </tbody>
 		</table>
 	</div>
-		<div id="footer-content">
-			<p>Photo by Tyler Lastovich from Pexels</p>
-		</div>
 
-	<!-- <footer id="footer">
-		Photo by Tyler Lastovich from Pexels
-	</footer> -->
+	<footer id="footer">
+		<p>Photo by Tyler Lastovich from Pexels</p>
+	</footer>
 	</div>
 </body>
 {% endblock %}

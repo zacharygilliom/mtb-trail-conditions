@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Hike Trails</title>
+{% endblock %}
+
+{% block body %}
+<!-- <body class= "imgbox" style="background-image: url('/static/images/brown-wooden-bridge-near-forest-967420.jpg')"> -->
+	<body style="background-color: slategray; ">
+	<div id="wrap">
+	<div>
+		<nav class="navbar navbar-expand-lg navbar-light">
+			<a class="navbar-brand" href="/">Home</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			  <span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+			  <ul class="navbar-nav">
+				<li class="nav-item">
+				  <a class="nav-link" href="/bike">Biking</a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link" href="/hike">Hiking</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/help">Help</a>
+				</li>
+			  </ul>
+			</div>
+		</nav>
+	</div>
+	<h1 class="page-title-info">Here is a list of hiking trails within a {{ user_distance }} mile radius</h1>
+	<div class=container-lg-table>		
+		<table class="table table-bordered table-sm">
+		  <thead class=thead-dark>
+		    <tr>
+		      <th scope="col">Trail Name</th>
+		      <th scope="col">Trail Rating</th>
+		      <th scope="col">Trail Difficulty</th>
+		      <th scope="col">Trail Conditions</th>
+		      <th scope="col">Distance to Trail (in miles)</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    {% for trail in trails %}
+		    <tr>
+		        <th scope="row">{{ trail.name }}</th>
+		        <td>{{ trail.rating }}</td>
+		        <td>{{ trail.difficulty }}</td>
+		        <td>
+					{% for condition in trail.conditions %}
+						{% if condition %}
+							<p>{{ condition }}</p>
+						{% else %}
+							<p> None </p>
+						{% endif %}
+		        	{% endfor %}
+		        </td>
+		        <td>{{ trail.get_distance_to_origin(user_loc) }} </td>
+		    </tr>
+		    {% endfor %}
+		  </tbody>
+		</table>
+	</div>
+
+	<footer id="footer">
+		<p>Photo by Tyler Lastovich from Pexels</p>
+	</footer>
+	</div>
+</body>
+{% endblock %}

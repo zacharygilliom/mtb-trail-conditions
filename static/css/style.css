@@ -42,6 +42,7 @@ table.table-sm > tbody > tr > th{
 .navbar.navbar-expand-lg.navbar-light {
     background:transparent;
     top:0;
+    height:85px;
 }
 .navbar.navbar-expand-lg.navbar-light > a {
     font-size: 4rem;
@@ -106,7 +107,7 @@ table.table-sm > tbody > tr > th{
 
 .message {
     text-align: center;
-    color:white;
+    color: white;
 }
 
 .navbar-light .navbar-toggler {
@@ -122,23 +123,19 @@ table.table-sm > tbody > tr > th{
   }
   
  .navbar-toggler {
-     background-color: white;
+    background-color: white;
     border-color: rgb(255,255,255);
   }
 
 #wrap {
-      position: relative; 
-      /* width: 500px; 
-      min-height: 100%;  */
-      /* background: #eee; */
-}
+      position: relative;
+} 
 
-#footer-content {
+#footer {
     position: absolute;
     bottom: 0px;
     height: 25px;
-    /* background: #333; */
-    /* width: 100%; */
-    color:white;
+    color: whitesmoke;
     align-content: center;
-}
+    text-align: center;
+} 
