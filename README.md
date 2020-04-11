@@ -7,17 +7,17 @@ You can clone this repository onto your computer.  You will need API keys for MT
 
 You can install all the necessary packages by using pip.  I suggest creating a virtualenv for your project
 
-'''python
+```python
 pip install -r requirements.txt
-'''
+```
 
 ## How to Customize
 
 If you would like to look at more trails, you can change the requests function to retrieve more.  It is the las argument in the API.
 
-'''
+```python
 request = requests.get(f'http://www.mtbproject.com/data/get-trails?lat={lat}&lon={lon}&maxDistance={maxDistance}&key={key}&maxResults=20')
-'''
+```
 
 There are JSON files of all the outputs from the APIs.  There is more info that is contained in the weather API that you can add to the results table.  You would need to adjust @app.route for the specific webpage to include the info that you would like.
 
