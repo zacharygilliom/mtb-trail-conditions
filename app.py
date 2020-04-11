@@ -6,8 +6,8 @@ import time
 from math import ceil, radians, sin, cos, asin, sqrt
 from flask import Flask, render_template, request
 
-weather_key = config.weather_api_key
-maps_KEY = config.google_maps_key
+# weather_key = config.weather_api_key
+# maps_KEY = config.google_maps_key
 
 
 app = Flask(__name__)
@@ -294,7 +294,7 @@ def get_location_data(lat, lon):
 	# t = t - 86400
 	''' Uncooment two lines below when fix is ready.  This saves the number of api requests made when styling our html documents.
 	'''
-	request = requests.get(f'https://api.darksky.net/forecast/{weather_key}/{lat},{lon},{t}')
+	request = requests.get(f'https://api.darksky.net/forecast/{config.weather_api_key}/{lat},{lon},{t}')
 	weather_dicts = json.loads(request.text)
 	
 	# open our pre-made weather data so we can work on styling our html.
