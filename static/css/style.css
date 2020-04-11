@@ -29,8 +29,8 @@ table.table-sm > tbody > tr > th{
     font-size: small;
 }
 .container-lg-table {
-    padding-left: 250px;
-    padding-right: 250px;
+    padding-left: 200px;
+    padding-right: 200px;
     /* text-align: center; */
     /* position: relative;
     overflow: auto;

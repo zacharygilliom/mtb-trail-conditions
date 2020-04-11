@@ -37,7 +37,9 @@
 		      <th scope="col">Trail Name</th>
 		      <th scope="col">Trail Rating</th>
 		      <th scope="col">Trail Difficulty</th>
-		      <th scope="col">Trail Conditions</th>
+			  <th scope="col">Trail Conditions</th>
+			  <th scope="col">Trail Weather</th>
+			  <th scope="col">Trail Temperature</th>
 		      <th scope="col">Distance to Trail (in miles)</th>
 		    </tr>
 		  </thead>
@@ -47,7 +49,7 @@
 		        <th scope="row">{{ trail.name }}</th>
 		        <td>{{ trail.rating }}</td>
 		        <td>{{ trail.difficulty }}</td>
-		        <td>
+		        <!-- <td>
 					{% for condition in trail.conditions %}
 						{% if condition %}
 							<p>{{ condition }}</p>
@@ -55,7 +57,10 @@
 							<p> None </p>
 						{% endif %}
 		        	{% endfor %}
-		        </td>
+				</td> -->
+				<td>{{ trail.conditionDetails }}</td>
+				<td>{{ trail.weather_summary }}</td>
+				<td>{{ trail.temperature }}</td>
 		        <td>{{ trail.get_distance_to_origin(user_loc) }} </td>
 		    </tr>
 		    {% endfor %}
