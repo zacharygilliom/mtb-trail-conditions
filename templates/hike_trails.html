@@ -6,7 +6,7 @@
 
 {% block body %}
 <!-- <body class= "imgbox" style="background-image: url('/static/images/brown-wooden-bridge-near-forest-967420.jpg')"> -->
-	<body style="background-color: slategray; ">
+	<body style="background-color:#138669 ">
 	<div id="wrap">
 	<div>
 		<nav class="navbar navbar-expand-lg navbar-light">
@@ -36,7 +36,8 @@
 		    <tr>
 		      <th scope="col">Trail Name</th>
 		      <th scope="col">Trail Rating</th>
-		      <th scope="col">Trail Difficulty</th>
+			  <th scope="col">Trail Difficulty</th>
+			  <th scope="col">Trail Temperature</th>
 		      <th scope="col">Trail Conditions</th>
 		      <th scope="col">Distance to Trail (in miles)</th>
 		    </tr>
@@ -47,15 +48,8 @@
 		        <th scope="row">{{ trail.name }}</th>
 		        <td>{{ trail.rating }}</td>
 		        <td>{{ trail.difficulty }}</td>
-		        <td>
-					{% for condition in trail.conditions %}
-						{% if condition %}
-							<p>{{ condition }}</p>
-						{% else %}
-							<p> None </p>
-						{% endif %}
-		        	{% endfor %}
-		        </td>
+				<td>{{ trail.temperature }}</td>
+				<td>{{ trail.conditionDetails }}</td>
 		        <td>{{ trail.get_distance_to_origin(user_loc) }} </td>
 		    </tr>
 		    {% endfor %}

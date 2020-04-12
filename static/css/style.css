@@ -133,9 +133,15 @@ table.table-sm > tbody > tr > th{
 
 #footer {
     position: absolute;
-    bottom: 0px;
+    bottom: 40px;
     height: 25px;
-    color: whitesmoke;
+    color: white;
     align-content: center;
     text-align: center;
 } 
+/* #footer > p {
+    color:white
+} */
+a {
+    color: white;
+}

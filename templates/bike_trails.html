@@ -6,7 +6,7 @@
 
 {% block body %}
 <!-- <body class= "imgbox" style="background-image: url('/static/images/brown-wooden-bridge-near-forest-967420.jpg')"> -->
-	<body style="background-color: slategray; ">
+	<body style="background-color:#138669 ">
 	<div id="wrap">
 	<div>
 		<nav class="navbar navbar-expand-lg navbar-light">
@@ -49,15 +49,6 @@
 		        <th scope="row">{{ trail.name }}</th>
 		        <td>{{ trail.rating }}</td>
 		        <td>{{ trail.difficulty }}</td>
-		        <!-- <td>
-					{% for condition in trail.conditions %}
-						{% if condition %}
-							<p>{{ condition }}</p>
-						{% else %}
-							<p> None </p>
-						{% endif %}
-		        	{% endfor %}
-				</td> -->
 				<td>{{ trail.conditionDetails }}</td>
 				<td>{{ trail.weather_summary }}</td>
 				<td>{{ trail.temperature }}</td>

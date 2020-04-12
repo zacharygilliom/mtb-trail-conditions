@@ -4,10 +4,7 @@ import requests
 import json
 import time
 from math import ceil, radians, sin, cos, asin, sqrt
-from flask import Flask, render_template, request
-
-# weather_key = config.weather_api_key
-# maps_KEY = config.google_maps_key
+from flask import Flask, render_template, request, redirect, url_for
 
 
 app = Flask(__name__)
@@ -175,22 +172,13 @@ class YesterdayWeather:
 
 def get_hike_trails(lat, lon, maxDistance, key):
 	# Get all the trails within a given distance from the user.
-	# this will return a list of Instantiated Trail Objects.
+	# this will return a list of Hike Trail Classes.
+	
+	#Uncomment this for live API version.  This is commented out so that we can save our API requests	
+	# request = requests.get(f'http://www.hikingproject.com/data/get-trails?lat={lat}&lon={lon}&maxDistance={maxDistance}&key={key}&maxResults=20')	
+	# trails_text = request.text
+	# trails_dict = json.loads(trails_text)
 
-	# Parse our JSON output
-	
-	#Uncomment this for live API version.  This is commented out so that we can save our API requests
-	
-	request = requests.get(f'http://www.hikingproject.com/data/get-trails?lat={lat}&lon={lon}&maxDistance={maxDistance}&key={key}&maxResults=20')	
-	trails_text = request.text
-	trails_dict = json.loads(trails_text)
-
-	# Writing our api call data to a json file for continued use instead of making api requests.  Commented out because we don't want to updated
-	# our file and because our api isn't making requsts right now.
-	
-	# with open('trailsHikeApiData.json', 'w') as json_file:
-	# 	json.dump(trails_dict, json_file)
-	
 	# Loading in our Trail Data test so we can play around with html without making api requests.
 	
 	with open('trailsHikeApiData.json') as f:
@@ -222,26 +210,20 @@ def get_hike_trails(lat, lon, maxDistance, key):
 
 def get_bike_trails(lat, lon, maxDistance, key):
 	# Get all the trails within a given distance from the user.
-	# this will return a list of Instantiated Trail Objects.
+	# this will return a list of Bike Trail Classes.
 
 	# Parse our JSON output
 	
 	#Uncomment this for live API version.  This is commented out so that we can save our API requests
 	
-	request = requests.get(f'http://www.mtbproject.com/data/get-trails?lat={lat}&lon={lon}&maxDistance={maxDistance}&key={key}&maxResults=20')	
-	trails_text = request.text
-	trails_dict = json.loads(trails_text)
-
-	# Writing our api call data to a json file for continued use instead of making api requests.  Commented out because we don't want to updated
-	# our file and because our api isn't making requsts right now.
-	
-	# with open('trailsApiData.json', 'w') as json_file:
-	# 	json.dump(trails_dict, json_file)
+	# request = requests.get(f'http://www.mtbproject.com/data/get-trails?lat={lat}&lon={lon}&maxDistance={maxDistance}&key={key}&maxResults=20')	
+	# trails_text = request.text
+	# trails_dict = json.loads(trails_text)
 	
 	# Loading in our Trail Data test so we can play around with html without making api requests.
 	
-	# with open('trailsBikeApiData.json') as f:
-	# 	trails_dict = json.load(f)
+	with open('trailsBikeApiData.json') as f:
+		trails_dict = json.load(f)
 
 	trails = []
 
@@ -292,121 +274,25 @@ def get_location_data(lat, lon):
 
 	# to look at weather from 24 hours ago, uncomment line below
 	# t = t - 86400
-	''' Uncooment two lines below when fix is ready.  This saves the number of api requests made when styling our html documents.
-	'''
-	request = requests.get(f'https://api.darksky.net/forecast/{config.weather_api_key}/{lat},{lon},{t}')
-	weather_dicts = json.loads(request.text)
+
+	# Uncooment two lines below when fix is ready.  This saves the number of api requests made when styling our html documents.
+	# request = requests.get(f'https://api.darksky.net/forecast/{config.weather_api_key}/{lat},{lon},{t}')
+	# weather_dicts = json.loads(request.text)
 	
 	# open our pre-made weather data so we can work on styling our html.
-	# with open('weatherApiData.json') as f:
-	# 	weather_dicts = json.load(f)
+	with open('weatherApiData.json') as f:
+		weather_dicts = json.load(f)
 	
 	return weather_dicts
 
-def get_weather(weath):
-	# This function takes a dictionary of our weather data from the get_location_function.
-	# this data should be the weather at the location of the specific trail
-	temperature = weath['currently']['temperature']
-	precip_prob = weath['currently']['precipProbability']
-	summ = weath['currently']['summary']
-	wind_speed = weath['currently']['windSpeed']
-	humidity = weath['currently']['humidity']
-	# if there is no precipitation probability, then precipitation type will be None, throwing an error.
-	try:
-		precip_type = weath['currently']['precipType']
-	except:
-		precip_type = 'None'
-	yest_weather = YesterdayWeather(precip_prob=precip_prob, temperature=temperature, precip_type=precip_type, wind_speed=wind_speed,
-					humidity=humidity, summary=summ)
-	return yest_weather
 
-
-def compare_weather_to_trail_condition(trail, weath):
-	# We will now compare the keywords of the trail conditionDetails and compare the weather data from the previous day at the 
-	# given trail location and write an algorithm to determine the current condition.
-	
-	# trail_keys is a list of strings of the trail conditions
-	trail_keys = trail.get_bike_condition_keywords()
-
-	# weather is a string of what the previous day precipitation was.  Should be a single string.
-	weather = weath.get_current_precip()
-
-	trail_current_conditions = []
-
-	for key in trail_keys:
-		if key == 'mud' and weather == 'Wet':
-			trail_current_conditions.append('Muddy and water puddles')
-		if key == 'wet' and weather == 'Wet':
-			trail_current_conditions.append('Very wet, could be some mud')
-		if key == 'snow' and weather == 'Wet':
-			trail_current_conditions.append('Some melted snow and patches of snow')
-		if key == 'dry' and weather == 'Wet':
-			trail_current_conditions.append('Some moisture on the ground')
-		if key == 'rock' and weather == 'Wet':
-			trail_current_conditions.append('Slippery Rocks')
-		if key == 'None' and weather == 'Wet':
-			trail_current_conditions.append('Wet')
-		if key == 'mud' and weather == 'Cold Wet':
-			trail_current_conditions.append('Cold, stiff mud, and wet')
-		if key == 'wet' and weather == 'Cold Wet':
-			trail_current_conditions.append('Watch for slush, muddy areas')
-		if key == 'snow' and weather == 'Cold Wet':
-			trail_current_conditions.append('Wet Snow')
-		if key == 'dry' and weather == 'Cold Wet':
-			trail_current_conditions.append('Could be some Dry Snow')
-		if key == 'rock' and weather == 'Cold Wet':
-			trail_current_conditions.append('Slippery Rocks')
-		if key == 'None' and weather == 'Cold Wet':
-			trail_current_conditions.append('Snow')
-		if key == 'mud' and weather == 'Damp':
-			trail_current_conditions.append('Muddy')
-		if key == 'wet' and weather == 'Damp':
-			trail_current_conditions.append('Probably moist and muddy')
-		if key == 'snow' and weather == 'Damp':
-			trail_current_conditions.append('Wet Snow')
-		if key == 'dry' and weather == 'Damp':
-			trail_current_conditions.append('Some moisture but probably dry')
-		if key == 'rock' and weather == 'Damp':
-			trail_current_conditions.append('Slippery Rocks')
-		if key == 'None' and weather == 'Damp':
-			trail_current_conditions.append('Damp')
-		if key == 'mud' and weather == 'Cold Damp':
-			trail_current_conditions.append('Muddy')
-		if key == 'wet' and weather == 'Cold Damp':
-			trail_current_conditions.append('Wet with some snow')
-		if key == 'snow' and weather == 'Cold Damp':
-			trail_current_conditions.append('Decent amount of snow')
-		if key == 'dry' and weather == 'Cold Damp':
-			trail_current_conditions.append('Little bit of moisture')
-		if key == 'rock' and weather == 'Cold Damp':
-			trail_current_conditions.append('Some rocks could be slick')
-		if key == 'None' and weather == 'Cold Damp':
-			trail_current_conditions.append('Light Snow')
-		if key == 'mud' and weather == 'Dry':
-			trail_current_conditions.append('Could be some hardened mud spots')
-		if key == 'wet' and weather == 'Dry':
-			trail_current_conditions.append('Known to be a wet trail, but otherwise should be dry')
-		if key == 'snow' and weather == 'Dry':
-			trail_current_conditions.append('Mostly Dry, Light Snow')
-		if key == 'dry' and weather == 'Dry':
-			trail_current_conditions.append('Dry Trail')
-		if key == 'rock' and weather == 'Dry':
-			trail_current_conditions.append('Dry, Rocky Trail')
-		if key == 'None' and weather == 'Dry':
-			trail_current_conditions.append('Dry')
-
-	if trail_current_conditions:
-		pass
-	else:
-		trail_current_conditions.append('None')
-
-	return trail_current_conditions
-
+# create the address that is readable by google maps from the users input
 def create_address(road_num, town, state, zipcode):
 	address_list = [road_num, town, state, zipcode]
 	addr = ",".join(address_list)
 	return addr
 
+# returns a list of the states in the US
 def get_states():
 	states = [
 		'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
@@ -441,33 +327,32 @@ def bike_trail_search():
 	user_address = create_address(request.form['inputRoadNum'], town=request.form['inputCity'], state=request.form['inputState'],
 					zipcode=request.form['inputZip'])
 	user_distance = request.form['Distance']
-	user_loc = get_coords(user_address, config.google_maps_key)
-	trail_list = get_bike_trails(lat=user_loc.lat, lon=user_loc.lon, maxDistance=user_distance, key=config.mtb_api_key)
-	for trail in trail_list:
-		trail_weather_json = get_location_data(lat=trail.lat, lon=trail.lon)
-		trail.temperature = trail_weather_json['currently']['temperature']
-		trail.weather_summary = trail_weather_json['currently']['summary']
-		trail_weather = get_weather(trail_weather_json)
-		trail.conditions = compare_weather_to_trail_condition(trail, trail_weather)
-	return render_template('bike_trails.html', trails=trail_list, user_loc=user_loc, user_distance=user_distance)
+	try:
+		user_loc = get_coords(user_address, config.google_maps_key)
+		trail_list = get_bike_trails(lat=user_loc.lat, lon=user_loc.lon, maxDistance=user_distance, key=config.mtb_api_key)
+		for trail in trail_list:
+			trail_weather_json = get_location_data(lat=trail.lat, lon=trail.lon)
+			trail.temperature = trail_weather_json['currently']['temperature']
+			trail.weather_summary = trail_weather_json['currently']['summary']
+		return render_template('bike_trails.html', trails=trail_list, user_loc=user_loc, user_distance=user_distance)
+	except:
+		return redirect(url_for('get_bike'))
 
 @app.route('/hike_trails', methods=['POST'])
 def hike_trail_search():
 	user_address = create_address(request.form['inputRoadNum'], town=request.form['inputCity'], state=request.form['inputState'],
 					zipcode=request.form['inputZip'])
 	user_distance = request.form['Distance']
-	user_loc = get_coords(user_address, config.google_maps_key)
-	trail_list = get_hike_trails(lat=user_loc.lat, lon=user_loc.lon, maxDistance=user_distance, key=config.mtb_api_key)
-	for trail in trail_list:
-		trail_weather_json = get_location_data(lat=trail.lat, lon=trail.lon)
-		trail_weather = get_weather(trail_weather_json)
-		trail.conditions = compare_weather_to_trail_condition(trail, trail_weather)
-	return render_template('hike_trails.html', trails=trail_list, user_loc=user_loc, user_distance=user_distance)
-
-
-@app.route('/help')
-def get_help():
-	return render_template('help.html')
+	try:
+		user_loc = get_coords(user_address, config.google_maps_key)
+		trail_list = get_hike_trails(lat=user_loc.lat, lon=user_loc.lon, maxDistance=user_distance, key=config.mtb_api_key)
+		for trail in trail_list:
+			trail_weather_json = get_location_data(lat=trail.lat, lon=trail.lon)
+			trail.temperature = trail_weather_json['currently']['temperature']
+			trail.weather_summary = trail_weather_json['currently']['summary']		
+		return render_template('hike_trails.html', trails=trail_list, user_loc=user_loc, user_distance=user_distance)
+	except:
+		return redirect(url_for('get_hike'))
 
 if __name__ == '__main__':
 	app.run(debug=True)
