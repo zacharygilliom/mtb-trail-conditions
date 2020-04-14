@@ -175,14 +175,14 @@ def get_hike_trails(lat, lon, maxDistance, key):
 	# this will return a list of Hike Trail Classes.
 	
 	#Uncomment this for live API version.  This is commented out so that we can save our API requests	
-	# request = requests.get(f'http://www.hikingproject.com/data/get-trails?lat={lat}&lon={lon}&maxDistance={maxDistance}&key={key}&maxResults=20')	
-	# trails_text = request.text
-	# trails_dict = json.loads(trails_text)
+	request = requests.get(f'http://www.hikingproject.com/data/get-trails?lat={lat}&lon={lon}&maxDistance={maxDistance}&key={key}&maxResults=20')	
+	trails_text = request.text
+	trails_dict = json.loads(trails_text)
 
 	# Loading in our Trail Data test so we can play around with html without making api requests.
 	
-	with open('trailsHikeApiData.json') as f:
-		trails_dict = json.load(f)
+	# with open('JSON_API_Data/trailsHikeApiData.json') as f:
+	# 	trails_dict = json.load(f)
 
 	trails = []
 
@@ -216,14 +216,14 @@ def get_bike_trails(lat, lon, maxDistance, key):
 	
 	#Uncomment this for live API version.  This is commented out so that we can save our API requests
 	
-	# request = requests.get(f'http://www.mtbproject.com/data/get-trails?lat={lat}&lon={lon}&maxDistance={maxDistance}&key={key}&maxResults=20')	
-	# trails_text = request.text
-	# trails_dict = json.loads(trails_text)
+	request = requests.get(f'http://www.mtbproject.com/data/get-trails?lat={lat}&lon={lon}&maxDistance={maxDistance}&key={key}&maxResults=20')	
+	trails_text = request.text
+	trails_dict = json.loads(trails_text)
 	
 	# Loading in our Trail Data test so we can play around with html without making api requests.
 	
-	with open('trailsBikeApiData.json') as f:
-		trails_dict = json.load(f)
+	# with open('JSON_API_Data/trailsBikeApiData.json') as f:
+	# 	trails_dict = json.load(f)
 
 	trails = []
 
@@ -265,23 +265,19 @@ def get_coords(address, key):
 
 def get_location_data(lat, lon):
 	# this function takes latitude and longitude data and returns a dictionary of weather data for the given area
-	# we want to pass the lat and lon of the individual trails that are return from our get_trails function.  This will
-	# return a dictionary of weather data for the givn trail on the previous day(i.e. 86400 is 24 hours prior to today).
+	# we want to pass the lat and lon of the individual trails that are return from our get_trails function.
 	
 	# we use the ceil function with today's time value because it returns a fractional value, which we don't need for precision 
 	# as, we don't need a fraction of a second accuracy for this.
 	t = ceil(time.time())
 
-	# to look at weather from 24 hours ago, uncomment line below
-	# t = t - 86400
-
 	# Uncooment two lines below when fix is ready.  This saves the number of api requests made when styling our html documents.
-	# request = requests.get(f'https://api.darksky.net/forecast/{config.weather_api_key}/{lat},{lon},{t}')
-	# weather_dicts = json.loads(request.text)
+	request = requests.get(f'https://api.darksky.net/forecast/{config.weather_api_key}/{lat},{lon},{t}')
+	weather_dicts = json.loads(request.text)
 	
 	# open our pre-made weather data so we can work on styling our html.
-	with open('weatherApiData.json') as f:
-		weather_dicts = json.load(f)
+	# with open('JSON_API_Data/weatherApiData.json') as f:
+	# 	weather_dicts = json.load(f)
 	
 	return weather_dicts
 
@@ -291,6 +287,7 @@ def create_address(road_num, town, state, zipcode):
 	address_list = [road_num, town, state, zipcode]
 	addr = ",".join(address_list)
 	return addr
+
 
 # returns a list of the states in the US
 def get_states():
@@ -307,6 +304,7 @@ def get_states():
 		'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
 	]
 	return states
+
 
 @app.route('/')
 def home():

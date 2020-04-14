@@ -22,9 +22,6 @@
 				<li class="nav-item">
 				  <a class="nav-link" href="/hike">Hiking</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/help">Help</a>
-				</li>
 			  </ul>
 			</div>
 		</nav>
@@ -34,13 +31,14 @@
 		<table class="table table-bordered table-sm">
 		  <thead class=thead-dark>
 		    <tr>
-		      <th scope="col">Trail Name</th>
-		      <th scope="col">Trail Rating</th>
-			  <th scope="col">Trail Difficulty</th>
-			  <th scope="col">Trail Temperature</th>
-		      <th scope="col">Trail Conditions</th>
-		      <th scope="col">Distance to Trail (in miles)</th>
-		    </tr>
+				<th scope="col">Trail Name</th>
+				<th scope="col">Trail Rating</th>
+				<th scope="col">Trail Difficulty</th>
+				<th scope="col">Trail Conditions</th>
+				<th scope="col">Trail Weather</th>
+				<th scope="col">Trail Temperature</th>
+				<th scope="col">Distance to Trail (in miles)</th>
+			  </tr>
 		  </thead>
 		  <tbody>
 		    {% for trail in trails %}
@@ -48,18 +46,19 @@
 		        <th scope="row">{{ trail.name }}</th>
 		        <td>{{ trail.rating }}</td>
 		        <td>{{ trail.difficulty }}</td>
-				<td>{{ trail.temperature }}</td>
 				<td>{{ trail.conditionDetails }}</td>
-		        <td>{{ trail.get_distance_to_origin(user_loc) }} </td>
+				<td>{{ trail.weather_summary }}</td>
+				<td>{{ trail.temperature }}</td>
+		        <td>{{ trail.get_distance_to_origin(user_loc) }}</td>
+
 		    </tr>
 		    {% endfor %}
 		  </tbody>
 		</table>
 	</div>
-
-	<footer id="footer">
+	<!-- <footer id="footer">
 		<p>Photo by Tyler Lastovich from Pexels</p>
-	</footer>
+	</footer> -->
 	</div>
 </body>
 {% endblock %}

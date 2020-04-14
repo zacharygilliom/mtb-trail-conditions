@@ -2,15 +2,9 @@ table.table-sm {
     border-color: black;
     background-color: white;
   }
-/* table.table-sm > tbody {
-    overflow-y: scroll;
-    height: 200px;
-    position: absolute;
-  } */
-table.table-sm > tbody > tr {
+
+  table.table-sm > tbody > tr {
     width: 100%;
-    /* display: inline-table;
-    table-layout: fixed; */
 }
 .page-title-info {
     color: white;
@@ -31,11 +25,6 @@ table.table-sm > tbody > tr > th{
 .container-lg-table {
     padding-left: 200px;
     padding-right: 200px;
-    /* text-align: center; */
-    /* position: relative;
-    overflow: auto;
-    height: 300px;
-    display: block; */
     padding-bottom: 50px;
 }
 
@@ -51,7 +40,7 @@ table.table-sm > tbody > tr > th{
 .navbar.navbar-expand-lg.navbar-light > div > ul > li > a {
     font-size: 2rem;
     padding-top: 1.5rem;
-    padding-right: 2.0rem;
+    padding-right: 1.0rem;
     color: #fff;
 }
 .landing-page-conditions {

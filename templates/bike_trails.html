@@ -22,9 +22,6 @@
 				<li class="nav-item">
 				  <a class="nav-link" href="/hike">Hiking</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/help">Help</a>
-				</li>
 			  </ul>
 			</div>
 		</nav>
@@ -52,16 +49,15 @@
 				<td>{{ trail.conditionDetails }}</td>
 				<td>{{ trail.weather_summary }}</td>
 				<td>{{ trail.temperature }}</td>
-		        <td>{{ trail.get_distance_to_origin(user_loc) }} </td>
+		        <td>{{ trail.get_distance_to_origin(user_loc) }}</td>
 		    </tr>
 		    {% endfor %}
 		  </tbody>
 		</table>
 	</div>
-
-	<footer id="footer">
+	<!-- <footer id="footer">
 		<p>Photo by Tyler Lastovich from Pexels</p>
-	</footer>
+	</footer> -->
 	</div>
 </body>
 {% endblock %}
