@@ -4,7 +4,7 @@ import requests
 import json
 import time
 from math import ceil, radians, sin, cos, asin, sqrt
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 
 
 app = Flask(__name__)
@@ -171,83 +171,98 @@ class YesterdayWeather:
 
 
 def get_hike_trails(lat, lon, maxDistance, key):
-	# Get all the trails within a given distance from the user.
-	# this will return a list of Hike Trail Classes.
+    # Get all the trails within a given distance from the user.
+    # this will return a list of Hike Trail Classes.
 	
-	#Uncomment this for live API version.  This is commented out so that we can save our API requests	
-	request = requests.get(f'http://www.hikingproject.com/data/get-trails?lat={lat}&lon={lon}&maxDistance={maxDistance}&key={key}&maxResults=20')	
-	trails_text = request.text
-	trails_dict = json.loads(trails_text)
+    #Uncomment this for live API version.  This is commented out so that we can save our API requests	
+    request = requests.get(f'http://www.hikingproject.com/data/get-trails?lat={lat}&lon={lon}&maxDistance={maxDistance}&key={key}&maxResults=20')	
+    trails_text = request.text
+    trails_dict = json.loads(trails_text)
+    trails_json = trails_dict['trails']
+    updated_trails_dict = {}
+    for index, trail in enumerate(trails_json):
+        weather = get_location_data(lat=trail['latitude'], lon=trail['longitude'])
+        trail['temperature'] = weather['currently']['temperature']
+        trail['weather_summary'] = weather['currently']['summary']
+        updated_trails_dict.update({index: trail})
 
+    return updated_trails_dict 
+	
 	# Loading in our Trail Data test so we can play around with html without making api requests.
 	
 	# with open('JSON_API_Data/trailsHikeApiData.json') as f:
 	# 	trails_dict = json.load(f)
 
-	trails = []
+	#trails = []
 
-	# grab out keys in the JSON output for each variable and store the key-values into our trails class.
-	# we will then store all of our classes as objects in our trails lists for later use.
-	for t in trails_dict['trails']:
-		name = t['name']
-		id = t['id']
-		conditionStatus = t['conditionStatus']
-		conditionDate = t['conditionDate']
-		try:
-			conditionDetails = t['conditionDetails'].lower()
-		except:
-			conditionDetails = t['conditionDetails']			
-		rating = t['stars']
-		lat = t['latitude']
-		lon = t['longitude']
-		difficulty = t['difficulty']
-		trail = BikeTrail(id=id, name=name, conditionStatus=conditionStatus, conditionDetails=conditionDetails, conditionDate=conditionDate,
-					rating=rating, lat=lat, lon=lon, difficulty=difficulty)
-		trails.append(trail)
-	
-	return trails
+	## grab out keys in the JSON output for each variable and store the key-values into our trails class.
+	## we will then store all of our classes as objects in our trails lists for later use.
+	#for t in trails_dict['trails']:
+	#	name = t['name']
+	#	id = t['id']
+	#	conditionStatus = t['conditionStatus']
+	#	conditionDate = t['conditionDate']
+	#	try:
+	#		conditionDetails = t['conditionDetails'].lower()
+	#	except:
+	#		conditionDetails = t['conditionDetails']			
+	#	rating = t['stars']
+	#	lat = t['latitude']
+	#	lon = t['longitude']
+	#	difficulty = t['difficulty']
+	#	trail = BikeTrail(id=id, name=name, conditionStatus=conditionStatus, conditionDetails=conditionDetails, conditionDate=conditionDate,
+	#				rating=rating, lat=lat, lon=lon, difficulty=difficulty)
+	#	trails.append(trail)
+	#
+	#return trails
 
 
 def get_bike_trails(lat, lon, maxDistance, key):
-	# Get all the trails within a given distance from the user.
-	# this will return a list of Bike Trail Classes.
+    # Get all the trails within a given distance from the user.
+    # this will return a list of Bike Trail Classes.
+    # Parse our JSON output
+	
+    #Uncomment this for live API version.  This is commented out so that we can save our API requests
+	
+    request = requests.get(f'http://www.mtbproject.com/data/get-trails?lat={lat}&lon={lon}&maxDistance={maxDistance}&key={key}&maxResults=20')	
+    trails_text = request.text
+    trails_dict = json.loads(trails_text)
+    trails_json = trails_dict['trails']
+    updated_trails_dict = {}
+    for index, trail in enumerate(trails_json):
+        weather = get_location_data(lat=trail['latitude'], lon=trail['longitude'])
+        trail['temperature'] = weather['currently']['temperature']
+        trail['weather_summary'] = weather['currently']['summary']
+        updated_trails_dict.update({index: trail})
 
-	# Parse our JSON output
-	
-	#Uncomment this for live API version.  This is commented out so that we can save our API requests
-	
-	request = requests.get(f'http://www.mtbproject.com/data/get-trails?lat={lat}&lon={lon}&maxDistance={maxDistance}&key={key}&maxResults=20')	
-	trails_text = request.text
-	trails_dict = json.loads(trails_text)
-	
+    return updated_trails_dict 
 	# Loading in our Trail Data test so we can play around with html without making api requests.
 	
 	# with open('JSON_API_Data/trailsBikeApiData.json') as f:
 	# 	trails_dict = json.load(f)
 
-	trails = []
+	# trails = []
 
 	# grab out keys in the JSON output for each variable and store the key-values into our trails class.
 	# we will then store all of our classes as objects in our trails lists for later use.
-	for t in trails_dict['trails']:
-		name = t['name']
-		id = t['id']
-		conditionStatus = t['conditionStatus']
-		conditionDate = t['conditionDate']
-		try:
-			conditionDetails = t['conditionDetails'].lower()
-		except:
-			conditionDetails = t['conditionDetails']			
-		rating = t['stars']
-		lat = t['latitude']
-		lon = t['longitude']
-		difficulty = t['difficulty']
-		trail = BikeTrail(id=id, name=name, conditionStatus=conditionStatus, conditionDetails=conditionDetails, conditionDate=conditionDate,
-					rating=rating, lat=lat, lon=lon, difficulty=difficulty)
-		trails.append(trail)
+	# for t in trails_dict['trails']:
+	# 	name = t['name']
+        #	id = t['id']
+        #	conditionStatus = t['conditionStatus']
+	#       conditionDate = t['conditionDate']
+	#       try:
+	#           conditionDetails = t['conditionDetails'].lower()
+	#       except:
+	#           conditionDetails = t['conditionDetails']			
+	#       rating = t['stars']
+	#       lat = t['latitude']
+	#       lon = t['longitude']
+	#       difficulty = t['difficulty']
+	#       trail = BikeTrail(id=id, name=name, conditionStatus=conditionStatus, conditionDetails=conditionDetails, conditionDate=conditionDate,
+	#               rating=rating, lat=lat, lon=lon, difficulty=difficulty)
+	#       trails.append(trail)
 	
-	return trails
-
+	#       return trails
 
 def get_coords(address, key):
 	# Turns our user's address into latitude and longitude that can be passed to our get_trails function
@@ -306,6 +321,29 @@ def get_states():
 	return states
 
 
+@app.route('/v1/bike/<string:roadNum>/<string:city>/<string:state>/<string:zipcode>/<string:distance>', methods=['GET'])
+def getBikeAPI(roadnum, city, state, zipcode, distance):
+    user_address = create_address(roadnum, city, state, zipcode)
+    user_distance = distance
+    try:
+        user_loc = get_coords(user_address, config.google_maps_key)
+        trail_list = get_bike_trails(lat=user_loc.lat, lon=user_loc.lon, maxDistance=user_distance, key=config.mtb_api_key)
+        return trail_list
+    except:
+        return {}
+
+@app.route('/v1/hike/<string:roadnum>/<string:city>/<string:state>/<string:zipcode>/<string:distance>', methods=['GET'])
+def getHikeAPI(roadnum, city, state, zipcode, distance):
+    user_address = create_address(roadnum, city, state, zipcode)
+    user_distance = distance
+    try:
+        user_loc = get_coords(user_address, config.google_maps_key)
+        trail_list = get_hike_trails(lat=user_loc.lat, lon=user_loc.lon, maxDistance=user_distance, key=config.mtb_api_key)
+        return trail_list
+    except:
+        return {}
+
+
 @app.route('/')
 def home():
 	return render_template('home.html')
@@ -353,5 +391,5 @@ def hike_trail_search():
 		return redirect(url_for('get_hike'))
 
 if __name__ == '__main__':
-	app.run(debug=True)
+    app.run(debug=True)
 
