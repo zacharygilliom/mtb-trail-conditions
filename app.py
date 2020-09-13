@@ -343,52 +343,52 @@ def getHikeAPI(roadnum, city, state, zipcode, distance):
     except:
         return {}
 
-
-@app.route('/')
-def home():
-	return render_template('home.html')
-
-@app.route('/bike')
-def get_bike():
-	states = get_states()
-	return render_template('bike.html', states=states)
-
-@app.route('/hike')
-def get_hike():
-	states = get_states()
-	return render_template('hike.html', states=states)
-
-@app.route('/bike_trails', methods=['POST'])
-def bike_trail_search():
-	user_address = create_address(request.form['inputRoadNum'], town=request.form['inputCity'], state=request.form['inputState'],
-					zipcode=request.form['inputZip'])
-	user_distance = request.form['Distance']
-	try:
-		user_loc = get_coords(user_address, config.google_maps_key)
-		trail_list = get_bike_trails(lat=user_loc.lat, lon=user_loc.lon, maxDistance=user_distance, key=config.mtb_api_key)
-		for trail in trail_list:
-			trail_weather_json = get_location_data(lat=trail.lat, lon=trail.lon)
-			trail.temperature = trail_weather_json['currently']['temperature']
-			trail.weather_summary = trail_weather_json['currently']['summary']
-		return render_template('bike_trails.html', trails=trail_list, user_loc=user_loc, user_distance=user_distance)
-	except:
-		return redirect(url_for('get_bike'))
-
-@app.route('/hike_trails', methods=['POST'])
-def hike_trail_search():
-	user_address = create_address(request.form['inputRoadNum'], town=request.form['inputCity'], state=request.form['inputState'],
-					zipcode=request.form['inputZip'])
-	user_distance = request.form['Distance']
-	try:
-		user_loc = get_coords(user_address, config.google_maps_key)
-		trail_list = get_hike_trails(lat=user_loc.lat, lon=user_loc.lon, maxDistance=user_distance, key=config.mtb_api_key)
-		for trail in trail_list:
-			trail_weather_json = get_location_data(lat=trail.lat, lon=trail.lon)
-			trail.temperature = trail_weather_json['currently']['temperature']
-			trail.weather_summary = trail_weather_json['currently']['summary']		
-		return render_template('hike_trails.html', trails=trail_list, user_loc=user_loc, user_distance=user_distance)
-	except:
-		return redirect(url_for('get_hike'))
+# 
+# @app.route('/')
+# def home():
+# 	return render_template('home.html')
+# 
+# @app.route('/bike')
+# def get_bike():
+# 	states = get_states()
+# 	return render_template('bike.html', states=states)
+# 
+# @app.route('/hike')
+# def get_hike():
+# 	states = get_states()
+# 	return render_template('hike.html', states=states)
+# 
+# @app.route('/bike_trails', methods=['POST'])
+# def bike_trail_search():
+# 	user_address = create_address(request.form['inputRoadNum'], town=request.form['inputCity'], state=request.form['inputState'],
+# 					zipcode=request.form['inputZip'])
+# 	user_distance = request.form['Distance']
+# 	try:
+# 		user_loc = get_coords(user_address, config.google_maps_key)
+# 		trail_list = get_bike_trails(lat=user_loc.lat, lon=user_loc.lon, maxDistance=user_distance, key=config.mtb_api_key)
+# 		for trail in trail_list:
+# 			trail_weather_json = get_location_data(lat=trail.lat, lon=trail.lon)
+# 			trail.temperature = trail_weather_json['currently']['temperature']
+# 			trail.weather_summary = trail_weather_json['currently']['summary']
+# 		return render_template('bike_trails.html', trails=trail_list, user_loc=user_loc, user_distance=user_distance)
+# 	except:
+# 		return redirect(url_for('get_bike'))
+# 
+# @app.route('/hike_trails', methods=['POST'])
+# def hike_trail_search():
+# 	user_address = create_address(request.form['inputRoadNum'], town=request.form['inputCity'], state=request.form['inputState'],
+# 					zipcode=request.form['inputZip'])
+# 	user_distance = request.form['Distance']
+# 	try:
+# 		user_loc = get_coords(user_address, config.google_maps_key)
+# 		trail_list = get_hike_trails(lat=user_loc.lat, lon=user_loc.lon, maxDistance=user_distance, key=config.mtb_api_key)
+# 		for trail in trail_list:
+# 			trail_weather_json = get_location_data(lat=trail.lat, lon=trail.lon)
+# 			trail.temperature = trail_weather_json['currently']['temperature']
+# 			trail.weather_summary = trail_weather_json['currently']['summary']		
+# 		return render_template('hike_trails.html', trails=trail_list, user_loc=user_loc, user_distance=user_distance)
+# 	except:
+# 		return redirect(url_for('get_hike'))
 
 if __name__ == '__main__':
     app.run(debug=True)
