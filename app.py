@@ -321,7 +321,7 @@ def get_states():
 	return states
 
 
-@app.route('/v1/bike/<string:roadNum>/<string:city>/<string:state>/<string:zipcode>/<string:distance>', methods=['GET'])
+@app.route('/v1/bike/<string:roadnum>/<string:city>/<string:state>/<string:zipcode>/<string:distance>', methods=['GET'])
 def getBikeAPI(roadnum, city, state, zipcode, distance):
     user_address = create_address(roadnum, city, state, zipcode)
     user_distance = distance
