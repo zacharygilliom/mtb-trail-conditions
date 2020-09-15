@@ -1,9 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Trails from './components/trails';
 
-function App() {
-  return (
+class App extends Component {
+	state = {
+		trails : []
+	};
+	componentDidMount() {
+		fetch('/v1/bike/555%20Bower%20Road/Milton/PA/17847/20')
+		.then(res => res.json())
+		.then((data) => {
+			this.setState({ trails: data })
+		})
+		.catch(console.log);
+	}
+  /*return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
@@ -21,6 +32,12 @@ function App() {
       </header>
     </div>
   );
+  */
+	render () {
+		return (
+			<Trails trails={this.state.trails} />
+		)
+	}
 }
 
 export default App;
