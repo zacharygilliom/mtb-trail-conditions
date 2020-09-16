@@ -2,15 +2,26 @@ import React, { Component } from 'react';
 import './App.css';
 import Trails from './components/trails';
 
+var targetURL = 'http://localhost:5000/v1/bike/555%20Bower%20Road/Milton/PA/17847/50'
+
 class App extends Component {
 	state = {
 		trails : []
 	};
 	componentDidMount() {
-		fetch('/v1/bike/555%20Bower%20Road/Milton/PA/17847/20')
+		fetch(targetURL,
+			{
+				headers:{
+					'Allow-Control-Access-Origin': '*'
+				}
+			}
+		)
 		.then(res => res.json())
 		.then((data) => {
-			this.setState({ trails: data })
+			this.setState({ trails: data });
+		})
+		.then((response) => {
+			console.log(response)
 		})
 		.catch(console.log);
 	}

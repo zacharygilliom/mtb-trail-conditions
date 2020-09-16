@@ -5,10 +5,11 @@ import json
 import time
 from math import ceil, radians, sin, cos, asin, sqrt
 from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask_cors import CORS
 
 
 app = Flask(__name__)
-
+CORS(app)
 
 class UserLocation(object):
 	''' 
@@ -233,7 +234,7 @@ def get_bike_trails(lat, lon, maxDistance, key):
         weather = get_location_data(lat=trail['latitude'], lon=trail['longitude'])
         trail['temperature'] = weather['currently']['temperature']
         trail['weather_summary'] = weather['currently']['summary']
-        updated_trails_dict.update({index:trail})
+        updated_trails_dict.update(trail)
 
     return updated_trails_dict 
 	# Loading in our Trail Data test so we can play around with html without making api requests.

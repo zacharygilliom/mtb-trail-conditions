@@ -1,14 +1,14 @@
 import React from 'react'
 
-const Trails = ({ trails }) => {
+const Trails = ( {trails} ) => {
 	return (
 		<div>
 		<center><h1>Trail List</h1></center>
 		{
-			trails.map( (trails) => (
+			trails.map( (trail) => (
 			<div> class="card">
 			<div> class="card-body">
-				<h5> class="card-title">{trails.name}</h5>
+				<h5> class="card-title">{trail.name}</h5>
 			</div>
 			</div>
 		))}
@@ -16,4 +16,4 @@ const Trails = ({ trails }) => {
 	)
 };
 
-export default Trails
+export default Trails;
