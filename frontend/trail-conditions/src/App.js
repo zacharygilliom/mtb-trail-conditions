@@ -6,22 +6,14 @@ var targetURL = 'http://localhost:5000/v1/bike/555%20Bower%20Road/Milton/PA/1784
 
 class App extends Component {
 	state = {
-		trails : []
+		trails: []
 	};
 	componentDidMount() {
-		fetch(targetURL,
-			{
-				headers:{
-					'Allow-Control-Access-Origin': '*'
-				}
-			}
-		)
+		fetch(targetURL)
 		.then(res => res.json())
-		.then((data) => {
-			this.setState({ trails: data });
-		})
-		.then((response) => {
-			console.log(response)
+		.then((data) => { 
+			console.log(data)
+			//this.setState({ trails: data });
 		})
 		.catch(console.log);
 	}

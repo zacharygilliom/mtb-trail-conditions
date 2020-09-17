@@ -229,14 +229,14 @@ def get_bike_trails(lat, lon, maxDistance, key):
     trails_text = request.text
     trails_dict = json.loads(trails_text)
     trails_json = trails_dict['trails']
-    updated_trails_dict = {} 
+    updated_trails_dict = [] 
     for index, trail in enumerate(trails_json):
         weather = get_location_data(lat=trail['latitude'], lon=trail['longitude'])
         trail['temperature'] = weather['currently']['temperature']
         trail['weather_summary'] = weather['currently']['summary']
-        updated_trails_dict.update(trail)
+        updated_trails_dict.append(trail)
 
-    return updated_trails_dict 
+    return jsonify(updated_trails_dict)
 	# Loading in our Trail Data test so we can play around with html without making api requests.
 	
 	# with open('JSON_API_Data/trailsBikeApiData.json') as f:
