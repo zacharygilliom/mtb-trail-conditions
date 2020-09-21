@@ -2,7 +2,7 @@ import React from 'react'
 
 const Trails = ( {trails} ) => {
 	return (
-		<div>
+		<div className="list-body">
 			<h1>Trails List</h1>
 		{
 			trails.map( (trail) => (
