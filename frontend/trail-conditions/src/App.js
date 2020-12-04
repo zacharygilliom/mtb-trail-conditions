@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
 import './App.css';
 import Trails from './components/trails';
+import addressFrom from './components/landing';
 
-//var targetURL = 'http://localhost:5000/v1/bike/555%20Bower%20Road/Milton/PA/17847/50'
+import  {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Link
+} from "react-router-dom";
+
+//var bikeURL = 'http://localhost:5000/v1/bike/555%20Bower%20Road/Milton/PA/17847/50'
+//var hikeURL = 'http://localhost:5000/v1/hike/555%20Bower%20Road/Milton/PA/17847/50'
 
 var data = [
   {
@@ -547,6 +556,7 @@ var data = [
   }
 ]
 
+/*
 class App extends Component {
 	state = {
 		trails: data 
@@ -567,5 +577,67 @@ class App extends Component {
 		)
 	}
 }
+*/
+export default function App() {
+	return (
+		<Router>
+			<div>
+				<div>
+					<nav class="navbar navbar-expand-lg navbar-light">
+						//<Link to="/">Home</Link>
+						<a class="navbar-brand" href="/">Home</a>
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+						</button>
+						<div class="collapse navbar-collapse" id="navbarNav">
+							<ul class="navbar-nav">
+								<li class="nav-item">
+							  		<a class="nav-link" href="/bike">Biking</a>
+								</li>
+								<li class="nav-item">
+							  		<a class="nav-link" href="/hike">Hiking</a>
+								</li>
+						  	</ul>
+						</div>
+					</nav>
+				</div>
+				<Switch>
+					<Route path="/">
+						<Home />
+					</Route>
+					<Route path="/bike">
+						<Bike />
+					</Route>
+					<Route path="/hike">
+						<Hike />
+					</Route>
+				</Switch>
+			</div>
+		</Router>
+	);
+}
 
-export default App;
+
+function Home() {
+	return (
+		<addressForm/>
+	);
+}
+function Bike() {
+	state = {
+		trails: data
+	};
+	return (
+		<Trails trails={this.state.trails} />
+	);
+}
+
+function Hike() {
+	state = {
+		trails: data
+	};
+	return (
+		<Trails trails={this.state.trails} />
+	);
+}
+
