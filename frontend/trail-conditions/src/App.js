@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Trails from './components/trails';
-import addressFrom from './components/landing';
+import AddressForm from './components/landing';
 
 import  {
 	BrowserRouter as Router,
@@ -578,66 +578,81 @@ class App extends Component {
 	}
 }
 */
-export default function App() {
+class App extends Component{
+	state = {
+		trails: data
+	};
+	render () {
 	return (
 		<Router>
-			<div>
-				<div>
-					<nav class="navbar navbar-expand-lg navbar-light">
-						//<Link to="/">Home</Link>
-						<a class="navbar-brand" href="/">Home</a>
-						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-						<span class="navbar-toggler-icon"></span>
-						</button>
-						<div class="collapse navbar-collapse" id="navbarNav">
-							<ul class="navbar-nav">
-								<li class="nav-item">
-							  		<a class="nav-link" href="/bike">Biking</a>
-								</li>
-								<li class="nav-item">
-							  		<a class="nav-link" href="/hike">Hiking</a>
-								</li>
-						  	</ul>
-						</div>
-					</nav>
+			<div className="home-page">
+				<div className="top-bar">
+					<ul>
+						<li>
+							<Link to="/">Home</Link>
+						</li>
+						<li>
+							<Link to="/bike">Bike</Link>
+						</li>
+						<li>
+							<Link to="/hike">Hike</Link>
+						</li>
+					</ul>
 				</div>
-				<Switch>
+				<div>
+			<Switch>
 					<Route path="/">
 						<Home />
 					</Route>
 					<Route path="/bike">
-						<Bike />
+						<Bike trails={this.state.trails}/>
 					</Route>
 					<Route path="/hike">
-						<Hike />
+						<Hike trails={this.state.trails}/>
 					</Route>
 				</Switch>
 			</div>
+			</div>
 		</Router>
 	);
+};
 }
 
-
-function Home() {
+class Home extends Component{
+	render () {
 	return (
-		<addressForm/>
+		<AddressForm />
 	);
+};
+}
+class Bike extends Component {
+	render () {
+	return (
+		<Trails trails={this.props.trails} />
+	);
+};
+}
+
+class Hike extends Component {
+	render () {
+	return (
+		<Trails trails={this.props.trails} />
+	);
+};
+}
+/*
+function Home() {
+	//return <AddressForm />;
+	return <h1>Home</h1>
 }
 function Bike() {
-	state = {
-		trails: data
-	};
-	return (
-		<Trails trails={this.state.trails} />
-	);
+	//return <Trails trails={this.props.trails} />;
+	return <h1>Bike</h1>
 }
 
 function Hike() {
-	state = {
-		trails: data
-	};
-	return (
-		<Trails trails={this.state.trails} />
-	);
+	//return <Trails trails={this.props.trails} />;
+	return <h1>Hike</h1>
 }
-
+*/
+export default App;

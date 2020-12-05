@@ -8,27 +8,44 @@ const initialFormData = Object.freeze({
 	zip_code: "",
 });
 
+class AddressForm extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {initialFormData};
 
-const addressForm = () =>  {
-	const [formData, updateFormData] = React.setState(initialFormData);
+		this.handleChange = this.handleChange.bind(this);
+	}
 
-	const handleChange = (e) => {
-		updateFormData({
-			...formData,
-
-		[e.target.name]: e.target.value.trim()
+	handleChange(event) {
+		this.setState({
+			street_number: "",
+			street_name: "",
+			city: "",
+			state: "",
+			zip_code: "",
 		});
-	};
+	}
+	handleSubmit(event) {
+		event.preventDefault();
+	}
+
+
+
+/*const addressForm = () =>  {
+	const [formData, updateFormData] = this.setState(initialFormData);
+
 	
 	const handleSubmit = (e) => {
-		e.preventDefault()
+		e.preventDefault();
 		console.log(formData);
 		// Pass data to API
 	};
-
+	
+*/
+	render () {
 	return  (
-		<div>
-		<div>
+		<div className="home-page">
+		<div className="home-bar">
 			<nav class="navbar navbar-expand-lg navbar-light">
 				<a class="navbar-brand" href="/">Home</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,33 +66,34 @@ const addressForm = () =>  {
 		<div>
 			<label>
 				street_number
-				<input name="street_number" onChange={handleChange} />
+				<input name="street_number" onChange={this.handleChange} />
 			</label>
 		<br />
 			<label>
 				street_name
-				<input name="street_name" onChange={handleChange} />
+				<input name="street_name" onChange={this.handleChange} />
 			</label>
 		<br />
 			<label>
 				city
-				<input name="city" onChange={handleChange} />
+				<input name="city" onChange={this.handleChange} />
 			</label>
 		<br />
 			<label>
 				state	
-				<input name="state" onChange={handleChange} />
+				<input name="state" onChange={this.handleChange} />
 			</label>
 		<br />
 			<label>
 				zip_code	
-				<input name="zip_code" onChange={handleChange} />
+				<input name="zip_code" onChange={this.handleChange} />
 			</label>
 		<br />
-			<button onClick={handleSubmit}>Submit</button>
+			<button onClick={this.handleSubmit}>Submit</button>
 		</div>
 		</div>
 	);
 };
+};
 
-export default addressForm;
+export default AddressForm;
