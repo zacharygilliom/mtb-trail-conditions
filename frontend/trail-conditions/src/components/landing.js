@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 
 var bikeURL = 'http://localhost:5000/v1/bike/555%20Bower%20Road/Milton/PA/17847/50'
@@ -55,6 +55,7 @@ class AddressForm extends React.Component {
 				alert("Invalid Form Submitted") 	
 		}
 		alert("Form Has Been Submitted")
+		console.log(this.state.trails)
 
 		}
 

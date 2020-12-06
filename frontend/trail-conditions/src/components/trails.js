@@ -1,10 +1,9 @@
 import React from 'react';
-import AddressForm from './landing';
 
 const Trails = ( {trails} ) => {
 	return (
 		<div>
-		<div>
+{/* 		<div>
 			<nav class="navbar navbar-expand-lg navbar-light">
 				<a class="navbar-brand" href="/">Home</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,14 +20,14 @@ const Trails = ( {trails} ) => {
 				  	</ul>
 				</div>
 			</nav>
-		</div>
+		</div> */}
 		<div className="list-body">
 			<h1>Trails List</h1>
 		{
 			trails.map( (trail) => (
-			<div class="card">
-			<div class="card-body">
-				<ul class="trails">
+			<div className="card">
+			<div className="card-body">
+				<ul className="trails">
 					<li><h3><b>{trail.name}</b></h3></li>
 						<p>Summary - {trail.summary}</p>
 						<p>Difficulty - {trail.difficulty}</p>
