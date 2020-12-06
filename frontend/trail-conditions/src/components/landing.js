@@ -29,40 +29,9 @@ class AddressForm extends React.Component {
 		event.preventDefault();
 	}
 
-
-
-/*const addressForm = () =>  {
-	const [formData, updateFormData] = this.setState(initialFormData);
-
-	
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		console.log(formData);
-		// Pass data to API
-	};
-	
-*/
 	render () {
 	return  (
 		<div className="home-page">
-		<div className="home-bar">
-			<nav class="navbar navbar-expand-lg navbar-light">
-				<a class="navbar-brand" href="/">Home</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav">
-						<li class="nav-item">
-					  		<a class="nav-link" href="/bike">Biking</a>
-						</li>
-						<li class="nav-item">
-					  		<a class="nav-link" href="/hike">Hiking</a>
-						</li>
-				  	</ul>
-				</div>
-			</nav>
-		</div>
 		<div>
 			<label>
 				street_number

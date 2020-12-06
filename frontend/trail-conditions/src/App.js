@@ -585,7 +585,7 @@ class App extends Component{
 	render () {
 	return (
 		<Router>
-			<div className="home-page">
+			<div className="top-home">
 				<div className="top-bar">
 					<ul>
 						<li>
@@ -601,7 +601,7 @@ class App extends Component{
 				</div>
 				<div>
 			<Switch>
-					<Route path="/">
+					<Route exact path="/">
 						<Home />
 					</Route>
 					<Route path="/bike">
@@ -640,19 +640,5 @@ class Hike extends Component {
 	);
 };
 }
-/*
-function Home() {
-	//return <AddressForm />;
-	return <h1>Home</h1>
-}
-function Bike() {
-	//return <Trails trails={this.props.trails} />;
-	return <h1>Bike</h1>
-}
 
-function Hike() {
-	//return <Trails trails={this.props.trails} />;
-	return <h1>Hike</h1>
-}
-*/
 export default App;
