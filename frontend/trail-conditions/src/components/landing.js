@@ -1,11 +1,16 @@
 import React from 'react'
 
 
+var bikeURL = 'http://localhost:5000/v1/bike/555%20Bower%20Road/Milton/PA/17847/50'
+var hikeURL = 'http://localhost:5000/v1/hike/555%20Bower%20Road/Milton/PA/17847/50'
+
+
 class AddressForm extends React.Component {
 	constructor(/*props*/) {
 		super(/*props*/);
 		this.state = {
 			name: "Form",
+			trails: ""
 		};
 
 		this.onFormChange = this.onFormChange.bind(this);
@@ -31,8 +36,27 @@ class AddressForm extends React.Component {
 	}
 	handleSubmit(event) {
 		event.preventDefault();
-		console.log(this.state.selectedOption)
-	}
+
+		//console.log(this.state.selectedOption)
+		switch(this.state.selectedOption) {
+			case "Biking":
+				console.log("Going for a Bike Ride, I See!")
+				fetch(bikeURL)
+				.then(response => response.json())
+				.then(data => this.setState({trails: data}));
+				break;
+			case "Hiking":
+				console.log("Going for a Hike, I See!")
+				fetch(hikeURL)
+				.then(response => response.json())
+				.then(data => this.setState({trails: data}));
+				break;
+			default:
+				alert("Invalid Form Submitted") 	
+		}
+		alert("Form Has Been Submitted")
+
+		}
 
 	render () {
 	return  (

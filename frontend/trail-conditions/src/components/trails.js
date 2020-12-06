@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import AddressForm from './landing';
 
 const Trails = ( {trails} ) => {
 	return (
