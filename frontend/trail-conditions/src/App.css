@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -42,6 +42,13 @@ ul.trails {
   to {
     transform: rotate(360deg);
   }
+} */
+
+.radio-buttons-home-page {
+  text-align: center;
 }
 
+.home-page {
+  text-align: center;
+}
 
