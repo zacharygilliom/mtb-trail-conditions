@@ -192,19 +192,19 @@ def get_hike_trails(lat, lon, maxDistance, key):
 
 def get_bike_trails(lat, lon, maxDistance, key):
     # Get all the trails within a given distance from the user.
-    # this will return a list of Bike Trail Classes.
+    # this will return a list of Bike Trail Instances.
     # Parse our JSON output
 
     request = requests.get(f'http://www.mtbproject.com/data/get-trails?lat={lat}&lon={lon}&maxDistance={maxDistance}&key={key}&maxResults=20')	
     trails_text = request.text
     trails_dict = json.loads(trails_text)
     trails_json = trails_dict['trails']
-    updated_trails_dict = [] 
+    updated_trails_dict = {} 
     for index, trail in enumerate(trails_json):
         weather = get_location_data(lat=trail['latitude'], lon=trail['longitude'])
         trail['temperature'] = weather['currently']['temperature']
         trail['weather_summary'] = weather['currently']['summary']
-        updated_trails_dict.append(trail)
+        updated_trails_dict.update({index: trail})
 
     return jsonify(updated_trails_dict)
 
@@ -284,3 +284,9 @@ def getHikeAPI(roadnum, city, state, zipcode, distance):
 if __name__ == '__main__':
     app.run(debug=True)
 
+#TODO: 
+# 1.Condense Routes down to 1. No need to have two, just need to put an if statement and pass the variable "Type" into the route so we can 
+# figure out if they want hiking trails or bike trails.
+# 2. Condense created of trails down to once function. No need to have two that do the same thing.
+# 3. Remove classes for trails or make use of them. Currently not being used in redesign.
+# 4. Remove unneeded code.
