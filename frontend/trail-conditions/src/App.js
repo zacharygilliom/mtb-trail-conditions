@@ -3,35 +3,6 @@ import './App.css';
 import Trails from './components/trails';
 
 
-var bikeURL = 'http://localhost:5000/v1/bike/555%20Bower%20Road/Milton/PA/17847/50'
-var hikeURL = 'http://localhost:5000/v1/hike/555%20Bower%20Road/Milton/PA/17847/50'
-
-
-
-/*
-class App extends Component {
-	state = {
-		trails: data 
-	};
-	
-	//componentDidMount() {
-	//	fetch(targetURL)
-	//	.then(res => res.json())
-	//	.then((data) => { 
-			//console.log(data)
-	//		this.setState({ trails: data });
-	//	})
-	//	.catch(console.log);
-	//}
-	render () {
-		return (
-			<Trails trails={this.state.trails} />
-		)
-	}
-}
-*/
-
-
 class App extends Component{
 	render () {
 	return (
@@ -46,8 +17,12 @@ class AddressForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			name: "Form",
-			trails: ""
+			trails: "",
+			street_number: "",
+			street_name: "",
+			city: "",
+			states: "",
+			zip_code: ""
 		};
 
 		this.onFormChange = this.onFormChange.bind(this);
@@ -57,13 +32,16 @@ class AddressForm extends Component {
 	}
 
 	onFormChange(event) {
+		const value = event.target.value;
 		this.setState({
-			street_number: "",
-			street_name: "",
-			city: "",
-			state: "",
-			zip_code: "",
+			[event.target.name]: value
 		});
+	}
+	getAPI(type) {
+		var makeURL = `http://localhost:5000/v1/${type}/${this.state.street_number}%20${this.state.street_name}/${this.state.city}/${this.state.states}/${this.state.zip_code}/50`
+		fetch(makeURL)
+		.then(res => res.json())
+		.then(data =>  this.setState({ trails: data }));
 	}
 
 	onButtonChange(event) {
@@ -74,55 +52,81 @@ class AddressForm extends Component {
 	handleSubmit(event) {
 		event.preventDefault();
 
+
 		switch(this.state.selectedOption) {
 			case "Biking":
+				this.getAPI('bike')
 				console.log("Going for a Bike Ride, I See!")
-				fetch(bikeURL)
-				.then(response => response.json())
-				.then(data => this.setState({trails: data}));
 				break;
 			case "Hiking":
 				console.log("Going for a Hike, I See!")
-				fetch(hikeURL)
-				.then(response => response.json())
-				.then(data => this.setState({trails: data}));
+				this.getAPI('hike')
 				break;
 			default:
 				alert("Invalid Form Submitted") 	
 		}
 		alert("Form Has Been Submitted")
-		console.log(this.state.trails)
 
 		}
 
 	render () {
 	return  (
 		<div className="home-page">
+		<h1 className="welcome-title">
+			Welcome to the Mountain Bike Trail Finder
+		</h1>
+		<br />
+		<h5 className="welcome-direction">
+			Simply enter the address where you are located and select whether you want to 
+			search for Biking or Hiking trails.  Once you Submit the address all the trails
+			near your location will display below.
+		</h5>
+		<br />
 		<form onSubmit={this.handleSubmit}>
 			<div className="text-fields">
 			<label>
 				Street Number
-				<input name="street_number" onChange={this.onFormChange} />
+				<input 
+					name="street_number"
+					value={this.state.street_number}
+					onChange={this.onFormChange} 
+				/>
 			</label>
 		<br />
 			<label>
 				Street Name
-				<input name="street_name" onChange={this.onFormChange} />
+				<input 
+					name="street_name"
+					value={this.state.street_name}
+					onChange={this.onFormChange} 
+				/>
 			</label>
 		<br />
 			<label>
 				City
-				<input name="city" onChange={this.onFormChange} />
+				<input 
+					name="city"
+					value={this.state.city}
+					onChange={this.onFormChange} 
+				/>
 			</label>
 		<br />
 			<label>
 				State	
-				<input name="state" onChange={this.onFormChange} />
+				<input 
+					name="states"
+					value={this.state.states}
+					onChange={this.onFormChange} 
+				/>
 			</label>
 		<br />
 			<label>
 				Zip Code 	
-				<input name="zip_code" onChange={this.onFormChange} />
+				<input 
+					name="zip_code"
+					value={this.state.zip_code}
+					onChange={this.onFormChange} 
+				/>
 			</label>
 			</div>
 		<br />
@@ -158,5 +162,6 @@ class AddressForm extends Component {
 
 export default App;
 
-//TODO: Pass form parameters to API call
+//DONE: Pass form parameters to API call
+//TODO: Style welcome page and style output from API
 //TODO: Separate classes into files.
